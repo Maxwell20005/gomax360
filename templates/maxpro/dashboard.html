@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load static %}
+<!-- title -->
+{% block title %}{{profile.username}}-Dashboard{% endblock title %}
+<!-- content -->
+{% block content %}
+<div class="container-fluid dashboard">
+    <h5 class="text-light pt-4 px-3">
+    {% if profile.profile_picture %}
+        <img src="{{profile.profile_picture.url}}" height="35" width="35" alt="{{profile.username}}" class="rounded rounded-circle">
+    {% else %}
+        <img src="{% static 'image/avartar.png' %}" height="35" width="35" alt="{{profile.username}}" class="rounded rounded-circle">
+    {% endif %}  Welcome {{profile.username}},</h5>
+    <div class="row bg-light p-3 m-3 dashinfo">
+        <div class="col-lg-5 col-md-12 col-sm-12">
+                {% if profile.profile_picture %}
+                <div class="text-center">
+                    <img src="{{profile.profile_picture.url}}" height="130" width="130" alt="{{profile.username}}" class="rounded rounded-circle mb-3">
+                    <a href="{% url 'updatepicture' %}" class="text-decoration-none text-dark"><h6>Change profile picture <i class="bi bi-pencil-square"></i></h6></a>
+                </div>
+                {% else %}
+                <div class="text-center">
+                    <img src="{% static 'image/avartar.png' %}" height="130" width="130" alt="{{profile.username}}" class="rounded rounded-circle mb-3">
+                    <a href="{% url 'updatepicture' %}" class="text-decoration-none text-dark"><h6>Change profile picture <i class="bi bi-pencil-square"></i></h6></a>
+                </div>
+                {% endif %}
+                    <ul class="list-group">
+                        <li class="list-group-item"><span class="fw-bold">Name: </span>{{profile.fullname}}</li>
+                        <li class="list-group-item"><span class="fw-bold">Email: </span>{{profile.email}}</li>
+                        <li class="list-group-item"><div class="d-grid"><a href="{% url 'update' %}" class="btn btn-primary">Edit Profile</a></div></li>
+                    </ul>
+        </div>
+        <div class="col-lg-7 col-md-12 col-sm-12">
+            <div class="text-center text-dark mt-2">
+                <h3>My Order Info</h3>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+

@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+<!-- title -->
+{% block title %}GoMax360-Update page{% endblock title %}
+<!-- content -->
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-6 mx-auto">
+            <div class="card bg-secondary p-4 m-3">
+                <h5 class="display-5 my-3 mx-auto">Update Profile</h5>
+                <form action="" method="post">
+                    {% csrf_token %}
+                    {{form.as_p}}
+                    <div class="d-grid">
+                        <button class="btn btn-dark my-3 " type="submit">Update</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

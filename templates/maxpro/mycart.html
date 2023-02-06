@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+<!-- title -->
+{% block title %}GoMax360-Home{% endblock title %}
+<!-- body -->
+{% block content %}
+<section class="bg-light">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-8 col-md-10 col-sm-10 mx-auto">
+                <h5 class="display-5 text-center text-dark p-3">My Orders</h5>
+                <table class="table table-stripped table-responsive text-dark">
+                    <thead>
+                        <tr>
+                            <th>Item Image</th>
+                            <th>Item Name</th>
+                            <th>Rate</th>
+                            <th>Quantity</th>
+                            <th>Item Price</th>
+                            <th class="text-danger">X</th>
+                        </tr>
+                    </thead>
+                    {% if cart %}
+                        {% for cart in cart.cartproduct_set.all %}
+                        <tbody>
+                            <tr>
+                                <td><img class="my-2" src="{{cart.product.image.url}}" height="80" width="80" alt=""></td>
+                                <td>{{cart.product.title}}</td>
+                                <td>&#8358;{{cart.rate | intcomma}}</td>
+                                <td>
+                                    <a href="{% url 'manageCart' cart.id %}?action=dcr" class="text-decoration-none"><i class="bi bi-dash-circle text-secondary"></i></a>
+                                    {{cart.quantity}}
+                                    <a href="{% url 'manageCart' cart.id %}?action=inc" class="text-decoration-none"><i class="bi bi-plus-circle text-secondary"></i></a>
+                                </td>
+                                <td>&#8358;{{cart.subtotal | intcomma}}</td>
+                                <td><a href="{% url 'manageCart' cart.id %}?action=rmv" class="text-decoration-none text-danger"><i class="bi bi-trash"></i></a></td>
+                            </tr>
+                        {% endfor %}
+                            <tr class="text-end">
+                                <td colspan="6">
+                                    <p class="lead"><span class="fw-bold">Grand Total: </span>&#8358;{{cart.total | intcomma}}</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <div class="d-grid">
+                                        <a href="{% url 'home' %}" class="btn btn-warning">Shop More Items</a>
+                                    </div>
+                                </td>
+                                {% if cart.cartproduct_set.all %}
+                                <td colspan="2">
+                                    <div class="d-grid">
+                                        <a href="{% url 'emptyCart' %}" class="btn btn-warning">Clear Cart</a>
+                                    </div>
+                                </td>
+                                <td colspan="2">
+                                    <div class="d-grid">
+                                        <a href="{% url 'checkout' %}" class="btn btn-warning">Proceed To Checkout</a>
+                                    </div>
+                                </td>
+                                {% else %}
+                                <td colspan="2">
+                                    <div class="d-grid">
+                                        <button type="submit" disabled class="btn btn-warning">Clear Cart</button>
+                                    </div>
+                                </td>
+                                <td colspan="2">
+                                    <div class="d-grid">
+                                        <button type="submit" disabled class="btn btn-warning">Proceed To Checkout</button>
+                                    </div>
+                                </td>
+                                {% endif %}               
+                            </tr>
+                        </tbody>
+                    {% else %}
+                      <p class="lead text-center px-3 mx-auto text-dark">No Order Made Yet</p>
+                    {% endif %}
+                </table>
+            </div>
+        </div>
+    </div>
+    
+</section>  
+{% endblock content %}

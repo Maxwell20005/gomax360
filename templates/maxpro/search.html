@@ -1,0 +1,133 @@
+{% extends "base.html" %}
+{% load static %}
+<!-- title -->
+{% block title %}GoMax360-{{product.title}} {% endblock title %}
+<!-- body -->
+{% block content %}
+    <!-- carousel -->
+    <section id="banner" class="bg-dark">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col-lg-2 d-none d-lg-block">
+                    <div class="card my-3 bg-secondary">
+                        <ul class="list-group">
+                            <li class="list-group-item bg-secondary"><a href="" class="text-decoration-none text-light"><i class="bi bi-phone"></i> Phone</a></li>
+                            <li class="list-group-item bg-secondary"><a href="" class="text-decoration-none text-light"><i class="bi bi-laptop"></i> Laptop</a></li>
+                            <li class="list-group-item bg-secondary"><a href="" class="text-decoration-none text-light"><i class="bi bi-display"></i> Desktop</a></li>
+                            <li class="list-group-item bg-secondary"><a href="" class="text-decoration-none text-light"><i class="bi bi-smartwatch"></i> Watch</a></li>
+                            <li class="list-group-item bg-secondary"><a href="" class="text-decoration-none text-light"><i class="bi bi-earbuds"></i> Airpods</a></li>
+                            <li class="list-group-item bg-secondary"><a href="" class="text-decoration-none text-light"><i class="bi bi-headphones"></i> Headphone</a></li>
+                            <li class="list-group-item bg-secondary"><a href="" class="text-decoration-none text-light"><i class="bi bi-three-dots-vertical"></i> Other categories</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-8 my-3">
+                    <section id="carousel">
+                        <div class="container-fluid p-0">
+                            <!-- Carousel -->
+                            {% if slides %}
+                            <div id="demo" class="carousel slide carousel-fade" data-bs-ride="carousel" data-interval="500">
+                                <!-- Indicators/dots -->
+                                <div class="carousel-indicators">
+                                    <button type="button" data-bs-target="#demo" data-bs-slide-to="0" class="active"></button>
+                                    <button type="button" data-bs-target="#demo" data-bs-slide-to="1"></button>
+                                    <button type="button" data-bs-target="#demo" data-bs-slide-to="2"></button>
+                                </div>
+                                <!-- The slideshow/carousel -->
+                                <div class="carousel-inner">
+                                   {% for slide in  slides %}
+                                   <div class="carousel-item active">
+                                     <img src="{{slide.slider.url}}" alt="Los Angeles" class="d-block w-100">
+                                    </div>
+                                   {% endfor %}
+                                </div>
+                            </div>
+                            {% else %}
+                            <p class="lead text-center text-dark bg-danger my-3">Tell the admin to upload banner image</p>
+                            {% endif %}
+                        </div>
+                    </section>
+                </div>
+                <div class="col-lg-2 my-3 px-2 text-center d-none d-lg-block">
+                    {% if banners %}
+                    {% for banner in banners %}
+                    <img src="{{banner.banner_one.url}}" height="140" width="150" alt="logo" class="mb-2">
+                    <img src="{{banner.banner_two.url}}" height="140" width="150" alt="logo">
+                    {% endfor %}
+                    {% else %}
+                    <p class="lead text-center text-dark bg-danger my-3">Tell the admin to upload promo banner</p>
+                    {% endif %}
+                    
+                </div>
+    
+            </div>
+        </div>
+    </section>    
+<!-- products -->
+{% if product %}
+    {% for product in product %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3 col-md-4 col-sm-6" id="img-effect">
+                <a href="{% url 'details' product.id %}" class="text-decoration-none text-light">
+                    <div class="card p-2 my-2">
+                        <div class="text-center card-header">
+                            <img class="img-flui" src="{{product.image.url}}" height="100" width="80" alt="{{product.title}}">
+                        </div>
+                        <div class="card-img-overlay">
+                            {% if product.discount_price %}
+                            <span class="discount"> - {{product.self.discount_price |floatformat:2}}25%</span>
+                            {% endif %}
+                        </div>
+                        <a href="" class="btn btn-warning">Add to Cart
+                        </a>
+                        <div class="card-body">
+                            <div class="text-center">
+                                <h6 class="fw-bold">{{product.title}}</h6>
+                                <hr>
+                            {% if product.discount_price %}
+                            <p class="d-flex justify-content-evenly gap-2">
+                                <span class="d-block">
+                                    &#x20A6 {{product.discount_price}}
+                                </span>
+                                <span class="d-block text-secondary fw-light">
+                                    &#x20A6 <del>{{product.price}}</del>
+                                </span>
+                            </p>
+                            <hr>
+                            {% else %}
+                             <p>&#x20A6 {{product.price}}</p>
+                            {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+{% else %}
+    <p class="lead bg-danger my-3 p-3">No Search Matches</p>
+{% endif %}
+<script type="text/javascript">
+    function incrementValue()
+    {
+        var value = parseInt(document.getElementById('number').value, 10);
+        value = isNaN(value) ? 0 : value;
+        if(value<10){
+            value++;
+                document.getElementById('number').value = value;
+        }
+    }
+    function decrementValue()
+    {
+        var value = parseInt(document.getElementById('number').value, 10);
+        value = isNaN(value) ? 0 : value;
+        if(value>1){
+            value--;
+                document.getElementById('number').value = value;
+        }
+    }
+</script>
+
+{% endblock content %}

@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+<!-- title -->
+{% block title %}GoMax360-Registration{% endblock title %}
+<!-- content -->
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-6 mx-auto">
+            <div class="card bg-secondary p-4 m-3">
+                <h4 class="display-4 my-3 mx-auto">Register Here</h4>
+                <form action="" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{form.as_p}}
+                    <div class="d-grid">
+                        <button class="btn btn-dark my-3 " type="submit">Register</button>
+                    </div>
+                    <a href="{% url 'login' %}" class="text-decoration-none text-dark">Already have an account? Login</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

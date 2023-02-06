@@ -1,0 +1,40 @@
+<nav class="navbar navbar-expand-sm navbar-dark bg-secondary sticky-top">
+  <div class="container-fluid">
+    <a class="navbar-brand fw-bolder" href="{% url 'home' %}">Go<span class="text-warning">Max</span>360</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#gomax">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="gomax">
+      <ul class="navbar-nav fw-bold mx-auto">
+        <li class="nav-item">
+          <a class="nav-link text-white" href="{% url 'home' %}"><i class="bi bi-house"></i> Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" href="#"><i class="bi bi-info"></i> About</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" href="{% url 'dashboard' %}"><i class="bi bi-palette"></i> {{profile.username}} Dashboard</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link text-white dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"><i class="bi bi-person"></i> User</a>
+        <ul class="dropdown-menu bg-dark">
+          {% if request.user.is_authenticated %}
+          <li><a class="dropdown-item text-white" href="{% url 'logout' %}">Logout</a></li>
+          {% else  %}
+          <li><a class="dropdown-item text-white" href="{% url 'login' %}">Login</a></li>
+          <li><a class="dropdown-item text-white" href="{% url 'register' %}">Register</a></li>
+          {% endif %}
+        </ul>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" href="{% url 'myCart' %}"><i class="bi bi-cart text-warning"></i> Cart</a>
+        </li>
+      </ul>
+      <form class="d-flex" method="get" action="{% url 'search' %}">
+        {% csrf_token %}
+        <input class="form-control me-2" type="text" name="kw" placeholder="Search products, brands and categories....">
+        <button class="btn btn-warning" type="submit"><i class="bi bi-search"></i></button>
+      </form>
+    </div>
+  </div>
+</nav>

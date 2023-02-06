@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load static %}
+<!-- title -->
+{% block title %}GoMax360-Update page{% endblock title %}
+<!-- content -->
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-6 mx-auto">
+            <div class="card bg-secondary p-4 m-3">
+                <h6 class="display-6 my-3 mx-auto">Update Profile Picture</h6>
+                <div class="text-center">
+                    {% if profile.profile_picture %}
+                        <img src="{{profile.profile_picture.url}}" height="130" width="130" alt="{{profile.username}}" class="rounded rounded-circle mb-3">
+                    {% else %}
+                        <img src="{% static 'image/avartar.png' %}" height="130" width="130" alt="{{profile.username}}" class="rounded rounded-circle mb-3">
+                    {% endif %}
+                </div>
+                <form action="" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{form.as_p}}
+                    <div class="d-grid">
+                        <button class="btn btn-dark my-3 " type="submit">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

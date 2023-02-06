@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+{% block content %}
+    <section id="checkout" class="py-3 bg-light">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-8 col-md-7 p-3 my-2">
+                        <h6 class="display-6 text-center">Items In Cart</h6>
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>SN</th>
+                                    <th>Product Image</th>
+                                    <th>Product Name</th>
+                                    <th>Unit Price</th>
+                                    <th>Quantity</th>
+                                    <th>Subtotal</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% if cart %}
+                                    {% for item in cart.cartproduct_set.all %}
+                                    <tr>
+                                        <td>{{forloop.counter}}</td>
+                                        <td><img class="my-2" src="{{item.product.image.url}}" height="80" width="80" alt=""></td>
+                                        <td>{{item.product.title}}</td>
+                                        <td>&#8358;{{item.rate | intcomma}}</td>
+                                        <td class="text-center">{{item.quantity}}</td>
+                                        <td>&#8358;{{item.subtotal | intcomma}}</td>
+                                    </tr>
+                                    {% endfor %}
+                                    <tr>
+                                        <td colspan="6">
+                                            <div class="d-grid">
+                                                <p class="lead"><span class="fw-bold">Grand Total: </span>&#8358;{{cart.total | intcomma}}</p>
+                                            </div>
+                                        </td>
+        
+                                    </tr>
+                                {% else %}
+                                  <tr>
+                                    <p class="lead text-center px-3 mx-auto text-dark">No Order To Checkout. Add Items To Cart</p>
+                                  </tr>
+                                {% endif %}
+
+                                <tr>
+                                    <td colspan="6">
+                                        <div class="d-grid">
+                                            <a href="{% url 'myCart' %}" class="btn btn-warning">Back To Cart</a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                </div>
+                <div class="col-lg-4 col-md-5">
+                    <div class="card p-3 my-2">
+                        <h6 class="display-6 text-center">Checkout Form</h6>
+                        <form action="" method="post">
+                            {% csrf_token %}
+                            {{form.as_p}}
+                            <div class="d-grid">
+                                <button class="btn btn-warning">
+                                    Place Order
+                                </button>
+                            </div>
+                        </form>
+    
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+{% endblock content %}

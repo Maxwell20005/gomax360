@@ -1,0 +1,153 @@
+{% extends "base.html" %}
+{% load static %}
+<!-- title -->
+{% block title %}GoMax360-{{product.title}} {% endblock title %}
+<!-- body -->
+{% block content %}
+<!-- products -->
+{% if product %}
+    <div class="card bg-light m-1 p-2">
+        <div class="row my-3 align-items-center">
+            <div class="col-md-6 col-12">
+                <h2 class="text-center pb-3">{{product.description}}</h2>
+                <table class="table table-striped">
+                    <tbody>
+                        <tr>
+                            <td><span class="fw-bold text-secondary">Brand</span></td>
+                            <td class="fw-light"><a href="https://www.{{product.brand}}.com/" target="_blank" class="text-warning text-decoration-none">{{product.brand}}</a></td>
+                        </tr>
+                        <tr>
+                            <td><span class="fw-bold text-secondary">RAM</span></td>
+                            <td class="text-secondary fw-light">{{product.ram}}</td>
+                        </tr>
+                        <tr>
+                            <td><span class="fw-bold text-secondary">Sim Slots</span></td>
+                            <td class="text-secondary fw-light">{{product.sim_slot}}</td>
+                        </tr>
+                        <tr>
+                            <td><span class="fw-bold text-secondary">Battery Capacity</span></td>
+                            <td class="text-secondary fw-light">{{product.battery_capacity}}</td>
+                        </tr>
+                        <tr>
+                            <td><span class="fw-bold text-secondary">Sim Type</span></td>
+                            <td class="text-secondary fw-light">{{product.sim_type}}</td>
+                        </tr>
+                        <tr>
+                            <td><span class="fw-bold text-secondary">Operating System</span></td>
+                            <td class="text-secondary fw-light">{{product.os}}</td>
+                        </tr>
+                        <tr>
+                            <td><span class="fw-bold text-secondary">Warranty Period</span></td>
+                            <td class="text-secondary fw-light">{{product.warranty}}</td>
+                        </tr>
+                        <tr>
+                            <td><span class="fw-bold text-secondary">Color</span></td>
+                            <td class="text-secondary fw-light">{{product.color}}</td>
+                        </tr>
+                        <tr>
+                            <td><span class="fw-bold text-secondary">Internal Memory</span></td>
+                            <td class="text-secondary fw-light">{{product.storage}}</td>
+                        </tr>
+                        <tr>
+                            <td><span class="fw-bold text-secondary">Screen size</span></td>
+                            <td class="text-secondary fw-light">{{product.screen_size}}</td>
+                        </tr>
+                        <tr>
+                            <td><span class="fw-bold text-secondary">Connectivity</span></td>
+                            <td class="text-secondary fw-light">{{product.network}}</td>
+                        </tr>
+                        <tr>
+                            <td><span class="fw-bold text-secondary">Camera</span></td>
+                            <td class="text-secondary fw-light">{{product.camera}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <h4>Similar Products</h4>
+                <div class="d-flex justify-content-evenly">
+                    <a href="{% url 'home' %}" class="text-decoration-none"><img src="{{product.similar_one.url}}" width="100" height="120" alt="{{product.title}}"></a>
+                    <img src="{{product.similar_two.url}}" width="100" height="120" alt="{{product.title}}">
+                    <img src="{{product.similar_three.url}}" width="100" height="120" alt="{{product.title}}">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="text-center my-3">
+                    <img src="{{product.image.url}}" width="300" height="380" alt="{{product.title}}">
+                </div>
+                <div class="d-flex justify-content-center my-3">
+                    <img class="mx-3" src="{{product.image_one.url}}" width="50" height="50" alt="{{product.title}}">
+                    <img class="mx-3" src="{{product.image_two.url}}" width="50" height="50" alt="{{product.title}}">
+                    <img class="mx-3" src="{{product.image_three.url}}" width="50" height="50" alt="{{product.title}}">
+                    <img class="mx-3" src="{{product.image_four.url}}" width="50" height="50" alt="{{product.title}}">
+                </div>
+                <hr>
+                <h6 class="text-secondary mx-3">Product Code: <span class="text-bold text-dark">{{product.product_code}}</span></h6>
+                <h6 class="text-secondary mx-3">Brand: <span class="text-bold"><a href="https://www.{{product.brand}}.com/" target="_blank" class="text-warning text-decoration-none">{{product.brand}}</a></span></h6>
+                <hr>
+                <table class="table">
+                    {% if product.discount_price %}
+                    <tbody>
+                        <td>
+                            <h4 class=" fw-bold mx-3">
+                                &#x20A6 {{product.discount_price}}
+                            </h4>
+                        </td>
+                    </tbody>
+                    <tbody>
+                        <td>
+                            <h4 class=" fw-bold py-2 mx-3">
+                                &#x20A6 <del>{{product.price}}</del>
+                            </h4>
+                        </td>
+                    </tbody>
+                    {% else %}
+                    <tbody>
+                        <td>
+                            <h4 class=" fw-bold mx-3">
+                                &#x20A6 {{product.price}}
+                            </h4>
+                        </td>
+                    </tbody>
+                    {% endif %}
+                    <tbody>
+                        <td>
+                            <div class="container-fluid py-2">
+                                <span class="fw-bold text-secondary">Quantity: </span>
+                                <input class="px-2 py-1" type="button" onclick="decrementValue()" value="-" />
+                                <input class="px-3 py-1" type="text" readonly name="quantity" value="1" maxlength="2" max="10" size="1" id="number" />
+                                <input class="px-2 py-1" type="button" onclick="incrementValue()" value="+" />
+                            </div>
+                        </td>
+                    </tbody>
+                    <tbody>
+                        <td class="d-grid">
+                            <a href="{% url 'buyNow' product.id %}" class="btn btn-warning text-decoration-none">Buy Now</a>
+                        </td>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% else %}
+    <p class="lead bg-danger my-3 p-3">No product details</p>
+{% endif %}
+<script type="text/javascript">
+    function incrementValue()
+    {
+        var value = parseInt(document.getElementById('number').value, 10);
+        value = isNaN(value) ? 0 : value;
+        if(value<10){
+            value++;
+                document.getElementById('number').value = value;
+        }
+    }
+    function decrementValue()
+    {
+        var value = parseInt(document.getElementById('number').value, 10);
+        value = isNaN(value) ? 0 : value;
+        if(value>1){
+            value--;
+                document.getElementById('number').value = value;
+        }
+    }
+</script>
+{% endblock content %}
